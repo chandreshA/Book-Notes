@@ -1,0 +1,113 @@
+<%- include('partials/header') -%>
+<section class="archive-hero add-book-hero position-relative overflow-hidden">
+  <img
+    src="/assets/DarkAcademia.jpg"
+    class="archive-hero-bg"
+    alt="Dark library reading room"
+  >
+
+  <div class="archive-hero-overlay"></div>
+
+  <div class="container position-relative py-5">
+    <a href="/" class="archive-back-link mb-4 d-inline-block">
+      ← Back to Library
+    </a>
+
+    <div class="row align-items-center min-vh-75">
+      <div class="col-lg-7 col-xl-6">
+        <h1 class="archive-title add-book-title mb-2">
+          Add Book
+        </h1>
+
+        <p class="archive-subtitle mb-4">
+          Document another record for the archive.
+        </p>
+
+        <form action="/books" method="POST" class="archive-form-panel">
+          <p class="archive-kicker mb-4">Book Details</p>
+
+          <div class="mb-3">
+            <label for="title" class="form-label archive-form-label">Title</label>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              class="form-control archive-input"
+              placeholder="Enter book title"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="author" class="form-label archive-form-label">Author</label>
+            <input
+              id="author"
+              name="author"
+              type="text"
+              class="form-control archive-input"
+              placeholder="Enter author name"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="isbn" class="form-label archive-form-label">ISBN</label>
+            <input
+              id="isbn"
+              name="isbn"
+              type="text"
+              class="form-control archive-input"
+              placeholder="Optional, searched automatically if blank"
+            >
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="date_read" class="form-label archive-form-label">Date Read</label>
+              <input
+                id="date_read"
+                name="date_read"
+                type="date"
+                class="form-control archive-input"
+              >
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="rating" class="form-label archive-form-label">Rating</label>
+              <select id="rating" name="rating" class="form-select archive-input">
+                <option value="">Select rating</option>
+                <option value="5">5 stars</option>
+                <option value="4">4 stars</option>
+                <option value="3">3 stars</option>
+                <option value="2">2 stars</option>
+                <option value="1">1 star</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="notes" class="form-label archive-form-label">Review / Notes</label>
+            <textarea
+              id="notes"
+              name="notes"
+              class="form-control archive-input"
+              rows="5"
+              placeholder="Write your thoughts, reflections, notes..."
+            ></textarea>
+          </div>
+
+          <div class="d-flex justify-content-end gap-3">
+            <a href="/" class="btn archive-btn-outline">
+              Cancel
+            </a>
+
+            <button type="submit" class="btn archive-btn-primary">
+              Add to Archive
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<%- include('partials/footer') -%>

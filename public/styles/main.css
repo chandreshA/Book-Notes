@@ -83,24 +83,30 @@ body {
   object-fit: cover;
   object-position: center right;
   opacity: 0.9;
+  z-index: 0;
 }
 
 .archive-hero-overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background:
     linear-gradient(
       90deg,
       rgba(13, 13, 11, 0.98) 0%,
       rgba(13, 13, 11, 0.78) 32%,
-      rgba(13, 13, 11, 0.05) 58%,
-      rgba(13, 13, 11, 0.01) 100%
+      rgba(13, 13, 11, 0.25) 58%,
+      rgba(13, 13, 11, 0.08) 100%
     ),
     linear-gradient(
       180deg,
       rgba(13, 13, 11, 0.05) 0%,
       rgba(13, 13, 11, 0.45) 100%
     );
+}
+
+.archive-hero .container {
+  z-index: 2;
 }
 
 .bookshelf-section {
@@ -214,4 +220,58 @@ body {
   background-color: #d8b16d;
   border-color: #d8b16d;
   color: #11110f;
+}
+
+.add-book-hero {
+  min-height: 100vh;
+}
+
+.add-book-title {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+}
+
+.archive-form-panel {
+  background: rgba(13, 13, 11, 0.72);
+  border: 1px solid rgba(180, 132, 62, 0.28);
+  border-radius: 0.4rem;
+  padding: 2rem;
+  backdrop-filter: blur(8px);
+}
+
+.archive-form-label {
+  color: #b7a894;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+}
+
+.archive-input {
+  background-color: rgba(12, 12, 10, 0.82);
+  border: 1px solid rgba(180, 132, 62, 0.28);
+  color: #e8ddc8;
+}
+
+.archive-input::placeholder {
+  color: #7f7568;
+}
+
+.archive-input:focus {
+  background-color: rgba(12, 12, 10, 0.95);
+  border-color: #c99a5b;
+  color: #e8ddc8;
+  box-shadow: 0 0 0 0.2rem rgba(201, 154, 91, 0.18);
+}
+
+.archive-back-link {
+  color: #c99a5b;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.archive-back-link:hover {
+  color: #d8b16d;
 }
