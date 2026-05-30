@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Notes</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- title hero -->
+    <section class="archive-hero position-relative overflow-hidden">
+        <img
+            src="/assets/DarkAcademia.jpg"
+            class="archive-hero-bg"
+            alt="Dark library reading room"
+        >
+
+
+        <div class="container position-relative py-5">
+            <div class="row align-items-center min-vh-75">
+            <div class="col-lg-7">
+                <p class="archive-kicker mb-3">My Library</p>
+
+                <h1 class="archive-title mb-3">The Archive</h1>
+
+                <p class="archive-subtitle mb-5">
+                Field notes on books worth remembering.
+                </p>
+
+                <div class="d-flex flex-wrap gap-4 mb-5 archive-stats">
+                <div>
+                    <h2><%= locals.bookCount %></h2>
+                    <p>Books Read</p>
+                </div>
+
+                <div class="archive-stat-divider"></div>
+
+                <div>
+                    <h2><%= locals.reviewCount %></h2>
+                    <p>Reviews</p>
+                </div>
+
+                <div class="archive-stat-divider"></div>
+
+                <div>
+                    <h2><%= locals.averageRating %></h2>
+                    <p>Avg Rating</p>
+                </div>
+                </div>
+
+                <p class="archive-quote mb-0">
+                “Knowledge has a beginning,<br>
+                but no end.”
+                </p>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- book list -->
+    <section class="bookshelf-section py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <div>
+                <p class="archive-kicker mb-2">Bookshelf</p>
+                <h2 class="bookshelf-title mb-0">Books Read</h2>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                
+                <a href="/books/new" class="btn archive-btn-primary text-nowrap">
+                    Add Book
+                </a>
+                <label for="sortBooks" class="small text-uppercase archive-muted text-nowrap mb-0">
+                Sort by
+                </label>
+
+                <select id="sortBooks" class="form-select form-select-sm archive-select">
+                <option>Recently Read</option>
+                <option>Highest Rated</option>
+                </select>
+            </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                <% books.forEach(function(book) { %>
+                    <div class="col">
+                    <div class="card h-100 archive-book-card">
+                        <img
+                        src="<%= book.cover_url %>"
+                        class="card-img-top archive-book-cover"
+                        alt="Book cover for <%= book.title %>"
+                        >
+
+                        <div class="card-body d-flex flex-column">
+                        <h3 class="h5 archive-book-title mb-1"><%= book.title %></h3>
+                        <p class="archive-book-author mb-2"><%= book.author %></p>
+
+                        <p class="archive-rating mb-3">
+                            <%= "★".repeat(book.rating) %><%= "☆".repeat(5 - book.rating) %>
+                        </p>
+
+                        <p class="card-text archive-review flex-grow-1">
+                            <%= book.notes %>
+                        </p>
+
+                        <p class="archive-date mb-3">
+                            Read <%= book.formatted_date %>
+                        </p>
+
+                        <div class="d-flex gap-2">
+                            <a href="/books/<%= book.id %>/edit" class="btn btn-sm archive-btn-outline">
+                            Edit
+                            </a>
+
+                            <form action="/books/<%= book.id %>/delete" method="POST">
+                            <button type="submit" class="btn btn-sm archive-btn-danger">
+                                Delete
+                            </button>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </section>
+
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+</body>
+</html>
