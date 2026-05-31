@@ -116,7 +116,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/books/newBook", (req, res) => {
-  res.render("addBook.ejs");
+  res.render("addBook.ejs", { book: null });
 });
 
 app.post("/books", async (req, res) => {
@@ -154,7 +154,72 @@ app.post("/books", async (req, res) => {
     res.status(500).send(err.message);
   }
   const openLibraryBook = await findBookByTitle(title, author);
-console.log("Open Library Book:", openLibraryBook);
+  console.log("Open Library Book:", openLibraryBook);
+});
+
+app.get("/books/:id/edit", async (req, res) => {
+  const id = req.params.id;
+
+  const result = await db.query("SELECT * FROM books WHERE id = $1", [id]);
+  const book = result.rows[0];
+
+  res.render("addBook.ejs", { book: book });
+});
+
+app.post("/books/:id/delete", async (req, res) => {
+  const id = req.params.id;
+  try {
+    await db.query("DELETE FROM books WHERE id = $1", [id]);
+    console.log(`Delete book with ID: ${id}`);
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/books/:id/edit", async (req, res) => {
+  const id = req.params.id;
+  let { title, author, isbn, rating, date_read, notes } = req.body;
+
+  title = title?.trim();
+  author = author?.trim();
+  isbn = isbn?.trim();
+
+  try {
+    const openLibraryBook = await findBookByTitle(title, author);
+
+    if (openLibraryBook) {
+      author = author || openLibraryBook.author;
+      isbn = isbn || openLibraryBook.isbn;
+    }
+
+    await db.query(
+      `UPDATE books
+       SET title = $1,
+           author = $2,
+           isbn = $3,
+           rating = $4,
+           date_read = $5,
+           notes = $6,
+           cover_id = $7
+       WHERE id = $8`,
+      [
+        title,
+        author || null,
+        isbn || null,
+        rating || null,
+        date_read || null,
+        notes || null,
+        openLibraryBook?.cover_id || null,
+        id,
+      ]
+    );
+
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error updating book");
+  }
 });
 
 app.listen(port, () => {

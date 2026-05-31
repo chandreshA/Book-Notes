@@ -16,14 +16,18 @@
     <div class="row align-items-center min-vh-75">
       <div class="col-lg-7 col-xl-6">
         <h1 class="archive-title add-book-title mb-2">
-          Add Book
+          <%= book ? 'Edit Book' : 'Add Book' %>
         </h1>
 
         <p class="archive-subtitle mb-4">
           Document another record for the archive.
         </p>
 
-        <form action="/books" method="POST" class="archive-form-panel">
+        <form
+          action="<%= book ? `/books/${book.id}/edit` : '/books' %>"
+          method="POST"
+          class="archive-form-panel"
+        >
           <p class="archive-kicker mb-4">Book Details</p>
 
           <div class="mb-3">
@@ -34,6 +38,7 @@
               type="text"
               class="form-control archive-input"
               placeholder="Enter book title"
+              value="<%= book ? book.title : '' %>"
               required
             >
           </div>
@@ -46,6 +51,7 @@
               type="text"
               class="form-control archive-input"
               placeholder="Enter author name"
+              value="<%= book ? book.author : '' %>"
               required
             >
           </div>
@@ -58,6 +64,7 @@
               type="text"
               class="form-control archive-input"
               placeholder="Optional, searched automatically if blank"
+              value="<%= book ? book.isbn : '' %>"
             >
           </div>
 
@@ -69,6 +76,7 @@
                 name="date_read"
                 type="date"
                 class="form-control archive-input"
+                value="<%= book && book.date_read ? book.date_read.toISOString().split('T')[0] : '' %>"
               >
             </div>
 
@@ -76,11 +84,11 @@
               <label for="rating" class="form-label archive-form-label">Rating</label>
               <select id="rating" name="rating" class="form-select archive-input">
                 <option value="">Select rating</option>
-                <option value="5">5 stars</option>
-                <option value="4">4 stars</option>
-                <option value="3">3 stars</option>
-                <option value="2">2 stars</option>
-                <option value="1">1 star</option>
+                <option value="5" <%= book && book.rating == 5 ? 'selected' : '' %>>5 stars</option>
+                <option value="4" <%= book && book.rating == 4 ? 'selected' : '' %>>4 stars</option>
+                <option value="3" <%= book && book.rating == 3 ? 'selected' : '' %>>3 stars</option>
+                <option value="2" <%= book && book.rating == 2 ? 'selected' : '' %>>2 stars</option>
+                <option value="1" <%= book && book.rating == 1 ? 'selected' : '' %>>1 star</option>
               </select>
             </div>
           </div>
@@ -93,7 +101,7 @@
               class="form-control archive-input"
               rows="5"
               placeholder="Write your thoughts, reflections, notes..."
-            ></textarea>
+            ><%= book ? book.notes : '' %></textarea>
           </div>
 
           <div class="d-flex justify-content-end gap-3">
@@ -102,7 +110,7 @@
             </a>
 
             <button type="submit" class="btn archive-btn-primary">
-              Add to Archive
+              <%= book ? 'Save Changes' : 'Add to Archive' %>
             </button>
           </div>
         </form>
