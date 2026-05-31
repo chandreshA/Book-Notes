@@ -9,6 +9,7 @@ const app = express();
 const port = 3000;
 const openLibraryUrl = "https://covers.openlibrary.org/b/isbn/";
 const titleSearchUrl = "https://openlibrary.org/search.json";
+const coverIdUrl = "https://covers.openlibrary.org/b/id/";
 
 const db = new pg.Client({
   user: "postgres",
@@ -37,9 +38,9 @@ async function getBooks() {
           year: "numeric",
         }),
         cover_url: book.cover_id
-          ? `https://covers.openlibrary.org/b/id/${book.cover_id}-L.jpg`
+          ? `${coverIdUrl}${book.cover_id}-L.jpg`
           : book.isbn
-            ? `https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg`
+            ? `${openLibraryUrl}${book.isbn}-L.jpg`
             : "/assets/no-cover.png",
       };
     });
@@ -52,7 +53,7 @@ async function getBooks() {
 }
 
 async function findBookByTitle(title, author) {
-  const response = await axios.get("https://openlibrary.org/search.json", {
+  const response = await axios.get(titleSearchUrl, {
     params: {
       title: title,
       limit: 10,
@@ -86,9 +87,9 @@ async function findBookByTitle(title, author) {
     isbn: book.isbn ? book.isbn[0] : "",
     cover_id: book.cover_i || null,
     cover_url: book.cover_i
-      ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
+      ? `${coverIdUrl}${book.cover_i}-L.jpg`
       : book.isbn
-        ? `https://covers.openlibrary.org/b/isbn/${book.isbn[0]}-L.jpg`
+        ? `${openLibraryUrl}${book.isbn[0]}-L.jpg`
         : "",
   };
 }
