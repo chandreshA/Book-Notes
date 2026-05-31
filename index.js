@@ -25,9 +25,15 @@ app.use(express.static("public"));
 
 const books = [];
 
-async function getBooks() {
+async function getBooks(sort = "recent") {
   try {
-    const result = await db.query("SELECT * FROM books");
+    let orderBy = "date_read DESC";
+
+    if (sort === "rating") {
+      orderBy = "rating DESC";
+    }
+
+    const result = await db.query(`SELECT * FROM books ORDER BY ${orderBy}`);
 
     const books = result.rows.map((book) => {
       return {
@@ -95,25 +101,36 @@ async function findBookByTitle(title, author) {
 }
 
 app.get("/", async (req, res) => {
-  const books = await getBooks();
+  const sort = req.query.sort || "recent";
+
+  const books = await getBooks(sort);
   const bookCount = books.length;
+
   const reviews = await db.query(`
-      SELECT COUNT(*) 
-      FROM books
-      WHERE notes IS NOT NULL
-      AND TRIM(notes) != ''
+    SELECT COUNT(*) 
+    FROM books
+    WHERE notes IS NOT NULL
+    AND TRIM(notes) != ''
   `);
+
   const aveRatings = await db.query(`
-      SELECT AVG(rating) 
-      FROM books
-      WHERE rating IS NOT NULL
+    SELECT AVG(rating) 
+    FROM books
+    WHERE rating IS NOT NULL
   `);
+
   const averageRating =
     aveRatings.rows[0].avg === null
       ? "0.0"
       : Number(aveRatings.rows[0].avg).toFixed(1);
 
-  res.render("index.ejs", { books: books, bookCount: bookCount, reviewCount: reviews.rows[0].count, averageRating: averageRating });
+  res.render("index.ejs", {
+    books: books,
+    bookCount: bookCount,
+    reviewCount: reviews.rows[0].count,
+    averageRating: averageRating,
+    sort: sort,
+  });
 });
 
 app.get("/books/newBook", (req, res) => {

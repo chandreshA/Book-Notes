@@ -63,14 +63,26 @@
                 <a href="/books/newBook" class="btn archive-btn-primary text-nowrap">
                     Add Book
                 </a>
-                <label for="sortBooks" class="small text-uppercase archive-muted text-nowrap mb-0">
-                Sort by
-                </label>
+                <form action="/" method="GET" class="d-flex align-items-center gap-2">
+                    <label for="sortBooks" class="small text-uppercase archive-muted mb-0 text-nowrap">
+                        Sort by
+                    </label>
 
-                <select id="sortBooks" class="form-select form-select-sm archive-select">
-                <option>Recently Read</option>
-                <option>Highest Rated</option>
-                </select>
+                    <select
+                        id="sortBooks"
+                        name="sort"
+                        class="form-select form-select-sm archive-select"
+                        onchange="this.form.submit()"
+                    >
+                        <option value="recent" <%= sort === "recent" ? "selected" : "" %>>
+                        Recently Read
+                        </option>
+
+                        <option value="rating" <%= sort === "rating" ? "selected" : "" %>>
+                        Highest Rated
+                        </option>
+                    </select>
+                </form>
             </div>
             </div>
 
