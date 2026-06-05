@@ -2,6 +2,9 @@ to start project, run npm i in terminal to install node packages and run nodemon
 Open Library API was used to retrive the book cover for this app
 
 <img src="/projectScreenShots/Screenshot 2026-06-05 at 11.16.19 AM.png" alt="Homescreen" width="400">
+<img src="/projectScreenShots/Screenshot 2026-06-05 at 11.20.20 AM.png" alt="Homescreen Bottom" width="400">
+<img src="/projectScreenShots/Screenshot 2026-06-05 at 11.20.59 AM.png" alt="Add book screen" width="400">
+<img src="/projectScreenShots/Screenshot 2026-06-05 at 11.21.13 AM.png" alt="Edit book screen" width="400">
 
 
 Following are the project objectives and the tech stack used:
