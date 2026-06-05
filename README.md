@@ -1,5 +1,5 @@
-to start project, run npm i in terminal to install node packages and run nodemon index.js to start the project
-Open Library API was used to retrive the book cover for this app
+to start project, run npm i in terminal to install node packages, and run nodemon index.js to start the project
+.Open Library API was used to retrive the book cover for this app
 
 <img src="/projectScreenShots/Screenshot 2026-06-05 at 11.16.19 AM.png" alt="Homescreen" width="400">
 <img src="/projectScreenShots/Screenshot 2026-06-05 at 11.20.20 AM.png" alt="Homescreen Bottom" width="400">
